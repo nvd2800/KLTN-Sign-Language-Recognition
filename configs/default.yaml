@@ -1,0 +1,74 @@
+project:
+  name: "KLTN Sign Language Recognition"
+  phase: 1
+  dataset_version: "v2.0-mini"
+  schema_version: "1.1"
+  seed: 42
+
+camera:
+  id: 0
+  width: 1280
+  height: 720
+  fps: 30
+  mirror_preview: true
+
+mediapipe:
+  hands:
+    enabled: true
+    max_num_hands: 2
+    min_detection_confidence: 0.6
+    min_tracking_confidence: 0.6
+  pose:
+    enabled: true
+    min_detection_confidence: 0.6
+    min_tracking_confidence: 0.6
+  face:
+    enabled: true
+    max_num_faces: 1
+    min_detection_confidence: 0.6
+    min_tracking_confidence: 0.6
+
+# dataset:
+#   raw_root: "dataset/raw"
+#   processed_root: "dataset/processed"
+#   metadata_root: "dataset/metadata"
+#   splits_root: "dataset/splits"
+#   save_video: false
+#   hand_landmarks: 21
+#   coordinate_dims: 3
+
+dataset:
+  raw_root: "dataset/raw"
+  processed_root: "dataset/processed"
+  metadata_root: "dataset/metadata"
+  splits_root: "dataset/splits"
+
+  # Lưu video cùng mỗi sequence
+  save_video: true
+  video_filename: "source_video.mp4"
+  video_codec: "mp4v"
+
+  hand_landmarks: 21
+  coordinate_dims: 3
+
+collection:
+  default_mode: "fixed"
+  fixed_frames: 45
+  min_frames: 30
+  max_frames: 60
+  countdown_seconds: 3
+  cooldown_seconds: 1.0
+  preview: true
+  lighting_default: "normal"
+  distance_default: "medium"
+  allow_outside_frame_range_manual: false
+  auto_verify_after_save: true
+
+quality:
+  # Phase 1 records these statistics but does NOT reject samples yet.
+  # Full automatic QC belongs to Phase 3.
+  min_valid_hand_ratio_phase1_hint: 0.90
+
+logging:
+  level: "INFO"
+  file: "logs/phase1.log"

@@ -1,0 +1,17 @@
+classes_phase1_mini:
+  - xin_chao
+  - cam_on
+  - khong
+  - REST
+  - UNKNOWN
+
+subject_id_pattern: "S{index:02d}"
+session_id_pattern: "SES{index:02d}"
+sample_id_pattern: "{sign}_{subject}_{session}_{index:03d}"
+
+collection_guidance:
+  target_subjects_mini: 4
+  target_samples_per_class_per_subject: 10
+  target_sequence_frames_min: 30
+  target_sequence_frames_max: 60
+  sessions_min: 2

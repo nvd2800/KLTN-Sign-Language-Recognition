@@ -1,0 +1,44 @@
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+
+.pytest_cache/
+
+logs/
+*.log
+
+# Dataset
+dataset/raw/*
+!dataset/raw/.gitkeep
+
+dataset/processed/*
+!dataset/processed/.gitkeep
+
+dataset/metadata/*
+!dataset/metadata/.gitkeep
+
+dataset/splits/*
+!dataset/splits/.gitkeep
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Environment / secrets
+.env
+.env.*
+credentials.json
+token.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

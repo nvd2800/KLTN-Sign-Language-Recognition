@@ -1,0 +1,29 @@
+phase: 2
+split_version: "v1"
+strategy: "signer_independent"
+seed: 42
+
+train_subjects:
+  - S01
+  - S02
+  - S03
+  - S04
+  - S05
+  - S06
+  - S07
+
+val_subjects:
+  - S08
+
+test_subjects:
+  - S09
+  - S10
+
+fail_on_unassigned_subject: true
+require_all_classes: true
+
+expected_classes:
+  - xin_chao
+  - cam_on
+  - xin_loi
+  - REST

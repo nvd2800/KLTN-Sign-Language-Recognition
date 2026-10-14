@@ -1,0 +1,29 @@
+phase: 4
+feature_version: "v1-wrist-middle-mcp"
+
+input:
+  quality_manifest: "dataset/processed/quality/quality_manifest.csv"
+  raw_root: "dataset/raw"
+
+selection:
+  include_statuses: [ACCEPT, REVIEW]
+  exclude_statuses: [REJECT]
+
+normalization:
+  wrist_index: 0
+  middle_mcp_index: 9
+  scale_epsilon: 1.0e-6
+  invalidate_near_zero_scale: true
+  max_abs_normalized_value: 50.0
+
+output:
+  root: "dataset/processed/features_phase4"
+  manifest_csv: "dataset/processed/features_phase4/feature_manifest.csv"
+  summary_json: "dataset/processed/features_phase4/feature_summary.json"
+  audit_json: "dataset/processed/features_phase4/feature_audit.json"
+
+audit:
+  require_all_selected_samples: true
+  require_finite_features: true
+  require_split_preserved: true
+  require_left_right_preserved: true

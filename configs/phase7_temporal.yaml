@@ -1,0 +1,51 @@
+phase: 7
+version: "v1-temporal-gru-tcn"
+
+input:
+  phase6_manifest: "dataset/processed/features_phase6/feature_manifest.csv"
+
+sequence:
+  target_frames: 32
+  short_sequence_policy: "pad"
+  standardize_epsilon: 1.0e-6
+
+feature:
+  active: "hands_pose_face453"
+
+dataset_output:
+  root: "dataset/processed/temporal_phase7"
+  train_npz: "dataset/processed/temporal_phase7/train.npz"
+  val_npz: "dataset/processed/temporal_phase7/val.npz"
+  test_npz: "dataset/processed/temporal_phase7/test.npz"
+  labels_json: "dataset/processed/temporal_phase7/labels.json"
+  preprocess_stats_npz: "dataset/processed/temporal_phase7/preprocess_stats.npz"
+  summary_json: "dataset/processed/temporal_phase7/dataset_summary.json"
+
+training:
+  seed: 42
+  batch_size: 16
+  epochs: 120
+  learning_rate: 0.001
+  monitor: "val_loss"
+  patience: 15
+  reduce_lr_patience: 7
+  reduce_lr_factor: 0.5
+  min_learning_rate: 1.0e-6
+
+gru:
+  units_1: 128
+  units_2: 64
+  dense_units: 64
+  dropout: 0.30
+
+tcn:
+  filters: 128
+  kernel_size: 3
+  dilations: [1, 2, 4, 8]
+  dense_units: 64
+  dropout: 0.30
+
+artifacts:
+  root: "artifacts"
+  gru_dir: "artifacts/gru"
+  tcn_dir: "artifacts/tcn"

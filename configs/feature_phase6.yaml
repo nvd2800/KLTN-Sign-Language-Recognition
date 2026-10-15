@@ -1,0 +1,65 @@
+phase: 6
+feature_version: "v1-pose-face-compact"
+
+input:
+  phase5_manifest: "dataset/processed/features_phase5/feature_manifest.csv"
+  raw_root: "dataset/raw"
+
+selection:
+  require_phase5_status:
+    - PASS
+
+pose:
+  enabled: true
+
+  # MediaPipe Pose landmark indexes
+  nose_index: 0
+  left_shoulder_index: 11
+  right_shoulder_index: 12
+  left_elbow_index: 13
+  right_elbow_index: 14
+  left_wrist_index: 15
+  right_wrist_index: 16
+
+  # Normalize pose around shoulder center and shoulder width.
+  scale_epsilon: 1.0e-6
+
+face:
+  enabled: true
+
+  # MediaPipe Face Mesh commonly used indices
+  mouth_upper_index: 13
+  mouth_lower_index: 14
+  mouth_left_index: 61
+  mouth_right_index: 291
+
+  left_eye_upper_index: 159
+  left_eye_lower_index: 145
+  right_eye_upper_index: 386
+  right_eye_lower_index: 374
+
+  left_brow_index: 105
+  right_brow_index: 334
+
+  left_eye_outer_index: 33
+  right_eye_outer_index: 263
+  nose_tip_index: 1
+
+  scale_epsilon: 1.0e-6
+
+output:
+  root: "dataset/processed/features_phase6"
+  manifest_csv: "dataset/processed/features_phase6/feature_manifest.csv"
+  summary_json: "dataset/processed/features_phase6/feature_summary.json"
+  audit_json: "dataset/processed/features_phase6/feature_audit.json"
+
+ablation:
+  save_hands_only: true
+  save_hands_pose: true
+  save_hands_pose_face: true
+
+audit:
+  # Structural PASS does not require full pose/face coverage;
+  # coverage is reported so the dataset can be improved before modeling.
+  min_pose_valid_ratio: 0.0
+  min_face_valid_ratio: 0.0

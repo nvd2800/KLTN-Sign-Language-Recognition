@@ -1,0 +1,62 @@
+phase: 5
+feature_version: "v2-geometric-motion"
+
+input:
+  phase4_manifest: "dataset/processed/features_phase4/feature_manifest.csv"
+  raw_root: "dataset/raw"
+
+selection:
+  require_phase4_status:
+    - PASS
+
+groups:
+  position: true
+  angles: true
+  distances: true
+  velocity: true
+  acceleration: true
+
+angles:
+  # 3 joint angles / finger x 5 fingers x 2 hands = 30
+  normalize_by_pi: true
+  epsilon: 1.0e-8
+
+distances:
+  # Hand-only distances always supported
+  thumb_index_each_hand: true
+  left_right_wrist: true
+
+  # Optional body-relative distances.
+  # If raw pose landmarks are unavailable, values stay zero with mask=false.
+  hand_face: true
+  hand_shoulder: true
+  hand_chest: true
+
+  # MediaPipe Pose indexes
+  pose_nose_index: 0
+  pose_left_shoulder_index: 11
+  pose_right_shoulder_index: 12
+
+  epsilon: 1.0e-6
+
+motion:
+  # Roadmap formula is frame difference:
+  # v_t = X_t - X_(t-1)
+  # a_t = v_t - v_(t-1)
+  use_time_delta: false
+
+  # Clips extreme detector jumps after feature computation.
+  velocity_clip_abs: 5.0
+  acceleration_clip_abs: 8.0
+
+output:
+  root: "dataset/processed/features_phase5"
+  manifest_csv: "dataset/processed/features_phase5/feature_manifest.csv"
+  summary_json: "dataset/processed/features_phase5/feature_summary.json"
+  audit_json: "dataset/processed/features_phase5/feature_audit.json"
+
+ablation:
+  save_position: true
+  save_position_velocity: true
+  save_position_velocity_acceleration: true
+  save_full: true

@@ -1,0 +1,42 @@
+phase: 8
+version: "v1-unknown-threshold"
+
+model:
+  experiment_dir: "artifacts/experiments/tcn_v1_160samples"
+  fallback_model: "artifacts/tcn/model.keras"
+  labels_json: "dataset/processed/temporal_phase7/labels.json"
+  preprocess_stats: "dataset/processed/temporal_phase7/preprocess_stats.npz"
+  feature_set: "hands_pose_face453"
+  target_frames: 32
+
+known_data:
+  val_npz: "dataset/processed/temporal_phase7/val.npz"
+  test_npz: "dataset/processed/temporal_phase7/test.npz"
+
+unknown_data:
+  manifest_csv: "dataset/unknown_phase8/unknown_manifest.csv"
+  val_npz: "dataset/processed/unknown_phase8/val_unknown.npz"
+  test_npz: "dataset/processed/unknown_phase8/test_unknown.npz"
+
+thresholds:
+  candidates: [0.50, 0.60, 0.70, 0.75, 0.80, 0.85, 0.90]
+  selection_metric: "balanced_accept_reject"
+  tie_breaker: "lower_false_accept"
+
+output:
+  dir: "artifacts/phase8_unknown"
+  calibration_csv: "artifacts/phase8_unknown/threshold_sweep.csv"
+  calibrated_json: "artifacts/phase8_unknown/calibrated_threshold.json"
+  validation_report_json: "artifacts/phase8_unknown/validation_report.json"
+  test_report_json: "artifacts/phase8_unknown/test_report.json"
+
+unknown_categories:
+  - scratching_head
+  - holding_phone
+  - touching_face
+  - random_hand
+  - waving
+  - pointing
+  - transition
+  - no_hand
+  - other_gesture

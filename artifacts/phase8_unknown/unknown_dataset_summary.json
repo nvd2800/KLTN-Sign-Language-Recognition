@@ -1,0 +1,11 @@
+{
+  "manifest": "D:\\KLTN_KTMT\\KLTN_Sign\\Sign-Language-Recognition-Phase0\\dataset\\unknown_phase8\\unknown_manifest.csv",
+  "feature_key": "ablation_hands_pose_face453",
+  "target_frames": 32,
+  "feature_dim": 453,
+  "counts": {
+    "val": 3,
+    "test": 3
+  },
+  "standardizer": "frozen Phase07 TRAIN stats only"
+}

@@ -1,0 +1,58 @@
+{
+  "mode": "DEV_ONLY",
+  "diagnostics": {
+    "xin_chao": {
+      "hand_body_position12": {
+        "positive_n": 1,
+        "negative_n": 1,
+        "positive_distances": [
+          0.22683216963743724
+        ],
+        "negative_distances": [
+          0.554279361408625
+        ],
+        "balanced": 1.0,
+        "positive_accept": 1.0,
+        "negative_reject": 1.0,
+        "usable": true,
+        "threshold": 0.3905557655230311
+      },
+      "finger_curl10": {
+        "positive_n": 1,
+        "negative_n": 1,
+        "positive_distances": [
+          0.09228141329712959
+        ],
+        "negative_distances": [
+          0.2889672340185341
+        ],
+        "balanced": 1.0,
+        "positive_accept": 1.0,
+        "negative_reject": 1.0,
+        "usable": true,
+        "threshold": 0.19062432365783183
+      },
+      "palm_orientation6": {
+        "positive_n": 1,
+        "negative_n": 1,
+        "positive_distances": [
+          0.25609011141301485
+        ],
+        "negative_distances": [
+          1.029345835462167
+        ],
+        "balanced": 1.0,
+        "positive_accept": 1.0,
+        "negative_reject": 1.0,
+        "usable": true,
+        "threshold": 0.642717973437591
+      }
+    }
+  },
+  "gallery_subjects": [
+    "S01"
+  ],
+  "validation_subjects": [
+    "S01"
+  ]
+}

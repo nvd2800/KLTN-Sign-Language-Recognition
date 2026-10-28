@@ -406,6 +406,7 @@ def atomic_save_sequence(
     metadata: SampleMetadata,
     video_temp_path: Path | None = None,
     video_filename: str = "source_video.mp4",
+    extra_metadata: dict[str, object] | None = None,
 ) -> None:
     """
     Atomically save one sample.
@@ -503,8 +504,19 @@ def atomic_save_sequence(
             encoding="utf-8",
         ) as file:
 
+            # SampleMetadata is a schema object, not a dict.
+            # Extra UNKNOWN fields belong only in serialized JSON.
+            serialized_metadata = metadata.to_dict()
+            if extra_metadata:
+                reserved = set(serialized_metadata) & set(extra_metadata)
+                if reserved:
+                    raise ValueError(
+                        f"extra_metadata cannot overwrite schema fields: {sorted(reserved)}"
+                    )
+                serialized_metadata.update(extra_metadata)
+
             json.dump(
-                metadata.to_dict(),
+                serialized_metadata,
                 file,
                 ensure_ascii=False,
                 indent=2,

@@ -1,0 +1,18 @@
+{
+  "name": "Phase10 TTS Vietnamese Natural Voice Fix",
+  "version": "v2.0.0-vieneu-local",
+  "files": [
+    "README_FIX.txt",
+    "configs/phase10.yaml",
+    "core/phase10_tts.py",
+    "scripts/phase10_vieneu_server.py",
+    "scripts/live_phase09_v3_spatial.py",
+    "scripts/diagnose_phase10_tts.py",
+    "scripts/test_phase10_tts.py",
+    "tests/test_phase10_vieneu_local.py",
+    "docs/PHASE10_FIX_TTS_DANH_VAN_VIENEU.md"
+  ],
+  "replaces_piper_as_default": true,
+  "models_included": false,
+  "checks": "43 pytest tests passed with mocked local TTS service; actual synthesis requires VieNeu install and model download"
+}

@@ -1,0 +1,7 @@
+﻿sample_id,subject_id,category,split,feature_path
+UNKNOWN_holding_phone_S01_SES01_001,S01,holding_phone,val,D:\KLTN_KTMT\KLTN_Sign\Sign-Language-Recognition-Phase0\dataset\processed\features_phase6_unknown\holding_phone\S01\SES01\UNKNOWN_holding_phone_S01_SES01_001\features_v3.npz
+UNKNOWN_holding_phone_S02_SES01_001,S02,holding_phone,test,D:\KLTN_KTMT\KLTN_Sign\Sign-Language-Recognition-Phase0\dataset\processed\features_phase6_unknown\holding_phone\S02\SES01\UNKNOWN_holding_phone_S02_SES01_001\features_v3.npz
+UNKNOWN_scratching_head_S01_SES01_001,S01,scratching_head,val,D:\KLTN_KTMT\KLTN_Sign\Sign-Language-Recognition-Phase0\dataset\processed\features_phase6_unknown\scratching_head\S01\SES01\UNKNOWN_scratching_head_S01_SES01_001\features_v3.npz
+UNKNOWN_scratching_head_S02_SES01_001,S02,scratching_head,test,D:\KLTN_KTMT\KLTN_Sign\Sign-Language-Recognition-Phase0\dataset\processed\features_phase6_unknown\scratching_head\S02\SES01\UNKNOWN_scratching_head_S02_SES01_001\features_v3.npz
+UNKNOWN_touching_face_S01_SES01_001,S01,touching_face,val,D:\KLTN_KTMT\KLTN_Sign\Sign-Language-Recognition-Phase0\dataset\processed\features_phase6_unknown\touching_face\S01\SES01\UNKNOWN_touching_face_S01_SES01_001\features_v3.npz
+UNKNOWN_touching_face_S02_SES01_001,S02,touching_face,test,D:\KLTN_KTMT\KLTN_Sign\Sign-Language-Recognition-Phase0\dataset\processed\features_phase6_unknown\touching_face\S02\SES01\UNKNOWN_touching_face_S02_SES01_001\features_v3.npz

@@ -14,6 +14,7 @@ FEATURE_ARRAYS = {
     "hands417": ("ablation_hands417", 417),
     "hands_pose444": ("ablation_hands_pose444", 444),
     "hands_pose_face453": ("ablation_hands_pose_face453", 453),
+    "hands_pose_face_spatial513": ("ablation_hands_pose_face453", 513),
 }
 
 
@@ -262,6 +263,13 @@ def load_feature_sequence(
         if array_name not in d.files:
             raise KeyError(f"{array_name} not found in {p}")
         x = np.asarray(d[array_name], dtype=np.float32)
+
+    if active_feature == "hands_pose_face_spatial513":
+        from core.feature_spatial import spatial_from_row
+        spatial = spatial_from_row(row, project_root)
+        if x.shape != (len(spatial), 453):
+            raise ValueError(f"{row.get('sample_id')}: Phase06/spatial temporal mismatch: {x.shape} vs {spatial.shape}")
+        x = np.concatenate((x, spatial), axis=1).astype(np.float32)
 
     if x.ndim != 2 or x.shape[1] != expected_dim:
         raise ValueError(

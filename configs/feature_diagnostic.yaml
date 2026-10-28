@@ -1,0 +1,23 @@
+# Reference only: live CLI options are authoritative.
+phase: 9
+purpose: webcam-feature-diagnostic
+capture:
+  frames: 45
+  countdown_seconds: 1.5
+  save_video_default: true  # original unmirrored camera, verified per trial
+  video_format: avi
+  session: SES01
+  camera_id: 0
+model_input:
+  frozen_model: "artifacts/experiments/tcn_v2_unknown/model.keras"
+  scaler: "artifacts/experiments/tcn_v2_unknown/preprocess_stats.npz"
+  labels: "artifacts/experiments/tcn_v2_unknown/labels.json"
+  target_frames: 32
+  feature_dimension: 453
+candidate_feature_dimension: 32
+output: "logs/feature_diagnostic"
+
+storage:
+  layout: "<label>/<subject>/<session>/<label>_<subject>_<session>_<NNN>"
+  condition: metadata.json
+  manifest: manifest.csv

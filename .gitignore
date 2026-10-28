@@ -42,3 +42,32 @@ token.json
 # OS
 .DS_Store
 Thumbs.db
+
+
+# Python environments
+/.venv/
+/.venv_tts/
+/venv/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local TTS voices
+/voices/
+
+# Raw and processed datasets
+/dataset/raw/
+/dataset/processed/
+
+# Generated logs
+/logs/
+
+# Training checkpoints
+/artifacts/experiments/
+
+# Secrets
+.env
+.env.*
+!.env.example

@@ -1,4 +1,5 @@
 from __future__ import annotations
+import argparse
 import json, sys
 from collections import Counter
 from pathlib import Path
@@ -30,9 +31,14 @@ def save_npz(path,X,mask,y,sample_ids,source_index):
     )
 
 def main():
-    cfg,raw=load_phase7_config(rp("configs/phase7_temporal.yaml"))
+    ap=argparse.ArgumentParser()
+    ap.add_argument('--config',default='configs/phase7_temporal.yaml')
+    args=ap.parse_args()
+    cfg,raw=load_phase7_config(rp(args.config))
     inp=raw["input"]; out=raw["dataset_output"]
     rows=read_csv(rp(inp["phase6_manifest"]))
+    if not rows:
+        raise ValueError('Empty Phase06 manifest')
     rows=[r for r in rows if (r.get("phase6_status") or "").upper()=="PASS"]
 
     split_map=split_rows(rows)

@@ -1,0 +1,15 @@
+phase: 9
+model:
+  # Set automatically from artifacts/phase8_unknown/calibrated_threshold.json when available
+  phase8_threshold_json: artifacts/phase8_unknown/calibrated_threshold.json
+recognition:
+  min_consecutive: 3
+  release_consecutive: 3
+  min_token_interval_s: 0.40
+  max_gap_s: 1.50
+  rest_label: REST
+  unknown_label: UNKNOWN
+  unknown_counts_as_release: false
+  fallback_confidence_threshold: 0.85
+output:
+  event_log: logs/phase9_events.jsonl

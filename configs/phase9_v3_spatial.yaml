@@ -1,0 +1,44 @@
+phase: 9
+version: "realtime-tcn-v3-spatial513"
+artifacts:
+  model: "artifacts/experiments/tcn_v3_spatial/model.keras"
+  stats: "artifacts/experiments/tcn_v3_spatial/preprocess_stats.npz"
+  labels: "artifacts/experiments/tcn_v3_spatial/labels.json"
+camera:
+  id: 0
+  width: 1280
+  height: 720
+  fps: 30
+  mirror_preview: true
+inference:
+  window_frames: 32
+  stride_frames: 8
+  min_confidence: 0.80  # PROVISIONAL: tune on validation/live trials
+  min_margin: 0.00
+  min_hand_presence_ratio: 0.30
+  min_motion: 0.0       # disabled by default; feature movement check only
+  release_no_hand_frames: 12
+  release_interval_frames: 2
+  auto_release_no_hand: true
+recognition:
+  min_consecutive: 3
+  release_consecutive: 3
+  min_token_interval_s: 0.4
+  max_gap_s: 1.5
+  rest_label: REST
+  unknown_label: UNKNOWN
+  unknown_counts_as_release: false
+ui:
+  width: 1500
+  height: 880
+  fullscreen: false
+  show_landmarks: true
+logging:
+  predictions: "logs/phase09_v3_spatial_predictions.csv"
+  tokens: "logs/phase09_v3_spatial_tokens.jsonl"
+  snapshots: "logs/phase09_v3_spatial_snapshots"
+
+# Optional gate; enable by CLI --spatial-gate <profile.json> or enabled: true.
+spatial_gate:
+  enabled: false
+  profile: "artifacts/spatial_gate_v1/profile.json"

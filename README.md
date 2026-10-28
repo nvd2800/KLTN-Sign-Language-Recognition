@@ -1,57 +1,58 @@
-# KLTN Sign Language Recognition — Phase 0
+# PHASE 09 — TEST REALTIME TCN V3.1 (513D)
 
-Đây là bản tái cấu trúc Phase 0 theo quyết định **không dùng SVM làm baseline**. Pipeline mới tập trung vào camera, MediaPipe landmarks, physical left/right, presence mask, quality foundation và Dataset V2 contract để chuẩn bị Phase 1.
+## Cài đặt
 
-## Kiến trúc
-```text
-Camera -> MediaPipe Hands/Pose/Face -> FrameLandmarks XYZ + Presence Mask
-       -> Basic Quality -> Dataset V2 contract -> Phase 1 Sequence Collector
-```
+Giải nén nội dung ZIP vào thư mục gốc `Sign-Language-Recognition-Phase0`. Đây là bản **bổ sung/patch**, không phải source đầy đủ. Yêu cầu đã có Phase04–06, Phase07, V3 Spatial 513D, Phase09 và các dependencies Python.
 
-SVM cũ chỉ nằm trong `legacy/svm/` và **không được import** bởi code mới.
+Sao lưu `scripts/live_phase09_v3_spatial.py` nếu muốn giữ bản cũ. ZIP bổ sung launcher, preflight, config riêng V3.1 và phiên bản script realtime có nhãn `--trial-isolation`.
 
-## Cài đặt (Windows / VS Code)
+## Chọn checkpoint
+
+Mở `configs/phase9_v3_1_spatial.yaml`, thay cả 3 đường dẫn `model`, `stats`, `labels` cho đúng vị trí checkpoint **mới**. Mặc định: `artifacts/experiments/tcn_v3_1_spatial/`.
+
+Nếu bạn train tại `artifacts/experiments/tcn_v3_1_spatial_verified/`, sửa cả ba sang thư mục này. Preflight sẽ báo BLOCKED nếu `dataset_summary.json` của checkpoint không khớp dataset mới `140 TRAIN / 31 VAL / 69 TEST` (khi dataset summary của máy cũng có số lượng này).
+
+## Các lệnh VS Code
+
 ```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
+python scripts/live_phase09_v3_1.py --dry-run
+python scripts/live_phase09_v3_1.py --dry-run --check-model
+python scripts/live_phase09_v3_1.py --fullscreen
+python scripts/live_phase09_v3_1.py --fullscreen --target-label xin_chao --trial-isolation
+python scripts/analyze_phase09_v3_1.py
 ```
 
-> Khuyến nghị Python 3.10/3.11 nếu MediaPipe trên phiên bản Python quá mới không có wheel tương thích.
+Lệnh trực tiếp tương đương:
 
-## Chạy acceptance test phần mềm
 ```powershell
-python scripts/validate_schema.py
-pytest -q
-python scripts/inspect_environment.py
+python scripts/live_phase09_v3_spatial.py --config configs/phase9_v3_1_spatial.yaml --fullscreen
 ```
 
-## Test camera
-```powershell
-python scripts/check_camera.py --seconds 10
-```
+## Phím điều khiển
 
-## Test Physical Left/Right + missing landmark
-```powershell
-python scripts/check_landmarks.py
-```
+- `1`: đúng ký hiệu được chỉ định `--target-label`
+- `2`: sai vị trí; `3`: sai handshape; `4`: sai hướng; `5`: partial
+- `6`: REST, `0`: thử tự do; nhấn các phím này để gắn nhãn cho lần thử mới
+- `F`: fullscreen; `V`: landmark; `M`: lật preview; `P`: pause
+- `C`: xóa tokens/FSM; `R`: reset buffer; `B`: manual REST (CHỈ debug)
+- `A`: bật/tắt no-hand release heuristic, `Q`: thoát
 
-Kỳ vọng:
-- chỉ giơ **tay trái vật lý** -> `Left=YES Right=NO`
-- chỉ giơ **tay phải vật lý** -> `Left=NO Right=YES`
-- mất hand/face/pose -> không crash
-- bật mirror preview không làm đổi identity lưu trữ
+`--trial-isolation`: mỗi lần nhấn phím số (1–6) thì reset State Machine, phục vụ đo một động tác riêng biệt. **Không dùng khi kiểm tra chuỗi ký hiệu liên tiếp.**
 
-## Chạy preview Phase 0
-```powershell
-python main.py
-```
+Đợi 32 frame sau khi đổi tình huống để buffer đầy; sau đó mỗi 8 frame chương trình infer lại. Để đo phát token cần xác nhận một ký hiệu qua nhiều prediction, không chỉ xem RAW confidence.
 
-## Tài liệu cần đọc trước Phase 1
-- `docs/dataset_schema.md`
-- `docs/collection_protocol.md`
-- `docs/phase0_acceptance.md`
+## Log
 
-## Phase 0 chưa làm
-Không train classifier; không normalization; không GRU/TCN; không UNKNOWN threshold; không state machine; không sentence/TTS/Web/Pi.
+- `logs/phase09_v3_1_spatial_predictions.csv`
+- `logs/phase09_v3_1_spatial_tokens.jsonl`
+- `logs/phase09_v3_1_spatial_snapshots/`
+
+Ghi `TCN_V3_SPATIAL` là tên nhánh xử lý trong code, nhưng model thực tế được lấy từ cấu hình **V3.1**; xem terminal `Loading ...` và đường dẫn model để xác nhận.
+
+## Lưu ý về đánh giá
+
+- Realtime trên Windows chưa được chạy trong môi trường tạo ZIP; cần kiểm tra trên máy có webcam.
+- Nếu chỉ có `history.json` trên 126/26 và `evaluation_val.json` có 26 mẫu, checkpoint có thể thuộc dataset cũ; phải xác thực trước khi tuyên bố kết quả V3.1.
+- `--check-model` yêu cầu TensorFlow đã cài; `--dry-run` thông thường chỉ kiểm tra tệp, scaler, labels, provenance.
+- Không dùng phím `B` khi thống kê release tự nhiên. No-hand release là heuristic, không phải REST do TCN dự đoán.
+- Dùng signer thật độc lập cho test; dữ liệu TEST đã dùng để phát hiện lỗi V3 không còn blind đối với việc phát triển V3.1.

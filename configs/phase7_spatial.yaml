@@ -1,0 +1,18 @@
+phase: 7
+version: spatial60-v3
+input:
+  phase6_manifest: dataset/processed/features_phase6/feature_manifest.csv
+sequence:
+  target_frames: 32
+  short_sequence_policy: pad
+  standardize_epsilon: 1.0e-6
+feature:
+  active: hands_pose_face_spatial513
+dataset_output:
+  root: dataset/processed/temporal_phase7_spatial513
+  train_npz: dataset/processed/temporal_phase7_spatial513/train.npz
+  val_npz: dataset/processed/temporal_phase7_spatial513/val.npz
+  test_npz: dataset/processed/temporal_phase7_spatial513/test.npz
+  labels_json: dataset/processed/temporal_phase7_spatial513/labels.json
+  preprocess_stats_npz: dataset/processed/temporal_phase7_spatial513/preprocess_stats.npz
+  summary_json: dataset/processed/temporal_phase7_spatial513/dataset_summary.json

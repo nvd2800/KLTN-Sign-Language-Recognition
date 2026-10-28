@@ -1,0 +1,61 @@
+phase: 3
+quality_version: "v3-semantic-thresholds"
+
+output:
+  root: "dataset/processed/quality"
+  manifest_csv: "dataset/processed/quality/quality_manifest.csv"
+  summary_json: "dataset/processed/quality/quality_summary.json"
+  audit_json: "dataset/processed/quality/quality_audit.json"
+
+rules:
+  min_frames: 30
+  max_frames: 60
+  require_monotonic_timestamps: true
+  require_finite_landmarks: true
+
+  rest_signs:
+    - REST
+
+  hand_presence_exempt_signs:
+    - REST
+    - UNKNOWN
+
+  two_hand_signs: []
+
+  # Normal known sign / one-hand sign
+  # >= 0.70       -> PASS hand condition
+  # 0.55 - <0.70 -> REVIEW
+  # < 0.55        -> REJECT
+  min_any_hand_ratio_accept: 0.70
+  min_any_hand_ratio_reject: 0.55
+
+  # Only for true two-hand signs
+  min_both_hand_ratio_accept: 0.70
+  min_both_hand_ratio_reject: 0.55
+
+  # REST = no-sign / sitting idle
+  rest_max_any_hand_ratio_accept: 0.05
+  rest_max_motion_mean_accept: 0.010
+
+  min_pose_ratio_warning: 0.50
+  min_face_ratio_warning: 0.50
+
+  crop_margin: 0.03
+  crop_ratio_review: 0.25
+
+  jump_distance_threshold: 0.25
+  jump_ratio_review: 0.15
+
+  min_motion_mean_review: 0.002
+  low_motion_exempt_signs:
+    - REST
+
+  blur_enabled: true
+  blur_variance_threshold: 50.0
+  blur_ratio_review: 0.40
+  blur_sample_every_n_frames: 3
+  video_missing_is_review: false
+
+policy:
+  review_train_eligible: true
+  reject_train_eligible: false

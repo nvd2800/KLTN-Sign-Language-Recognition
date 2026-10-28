@@ -1,0 +1,44 @@
+# Phase09 — Realtime model TCN V3.1 (513D). Không ghi đè cấu hình V3 cũ.
+# Nếu bạn train vào tcn_v3_1_spatial_verified, thay cả 3 path xuống dòng bên dưới.
+phase: 9
+version: realtime-tcn-v3.1-spatial513
+artifacts:
+  model: "artifacts/experiments/tcn_v3_1_xin_loi_20261028/model.keras"
+  stats: "artifacts/experiments/tcn_v3_1_xin_loi_20261028/preprocess_stats.npz"
+  labels: "artifacts/experiments/tcn_v3_1_xin_loi_20261028/labels.json"
+camera:
+  id: 0
+  width: 1280
+  height: 720
+  fps: 30
+  mirror_preview: true
+inference:
+  window_frames: 32
+  stride_frames: 8
+  min_confidence: 0.80 # Experimental: tune on VAL, not locked TEST
+  min_margin: 0.00
+  min_hand_presence_ratio: 0.30
+  min_motion: 0.0
+  release_no_hand_frames: 12
+  release_interval_frames: 2
+  auto_release_no_hand: true
+recognition:
+  min_consecutive: 3
+  release_consecutive: 3
+  min_token_interval_s: 0.4
+  max_gap_s: 1.5
+  rest_label: REST
+  unknown_label: UNKNOWN
+  unknown_counts_as_release: false
+ui:
+  width: 1500
+  height: 880
+  fullscreen: false
+  show_landmarks: true
+logging:
+  predictions: "logs/phase09_v3_1_spatial_predictions.csv"
+  tokens: "logs/phase09_v3_1_spatial_tokens.jsonl"
+  snapshots: "logs/phase09_v3_1_spatial_snapshots"
+spatial_gate:
+  enabled: false  # V3.1 already uses 60D; old 32D Gate optional, not required
+  profile: "artifacts/spatial_gate_v1/profile.json"

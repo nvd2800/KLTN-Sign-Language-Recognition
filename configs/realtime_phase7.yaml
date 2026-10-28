@@ -1,0 +1,38 @@
+phase: 7
+realtime_version: "v2-segmented-decision"
+
+model:
+  experiment: "tcn_v1_160samples"
+  feature_set: "hands_pose_face453"
+  target_frames: 32
+
+decision:
+  min_confidence: 0.85
+  min_top1_margin: 0.20
+  stable_window_count: 5
+  stable_required: 4
+  min_predict_frames: 12
+  preview_stride_frames: 4
+
+segmentation:
+  start_motion_threshold: 0.012
+  end_motion_threshold: 0.004
+  start_required_frames: 3
+  end_still_frames: 6
+  min_active_frames: 12
+  max_active_frames: 60
+  pre_roll_frames: 4
+  min_hand_presence_ratio: 0.45
+  cooldown_seconds: 0.90
+  require_rest_before_repeat: true
+
+unknown:
+  label: "UNKNOWN"
+
+ui:
+  mirror_preview: true
+  default_fullscreen: false
+
+logging:
+  live_csv: "logs/phase7_decision_v2.csv"
+  event_jsonl: "logs/phase7_decision_events.jsonl"

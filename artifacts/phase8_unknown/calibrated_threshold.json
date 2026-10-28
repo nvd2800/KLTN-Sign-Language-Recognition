@@ -1,0 +1,26 @@
+{
+  "threshold": 0.9,
+  "selection_metric": "balanced_accept_reject",
+  "validation": {
+    "threshold": 0.9,
+    "known_accept_rate": 1.0,
+    "false_reject_rate": 0.0,
+    "unknown_reject_rate": 0.0,
+    "false_accept_rate": 1.0,
+    "balanced_accept_reject": 0.5,
+    "known_n": 17,
+    "unknown_n": 3,
+    "known_mean_conf": 0.9995077848434448,
+    "unknown_mean_conf": 0.9992332458496094
+  },
+  "candidate_thresholds": [
+    0.5,
+    0.6,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9
+  ],
+  "selection_rule": "maximize balanced_accept_reject; tie: lower FAR, lower FRR, higher threshold"
+}

@@ -1,0 +1,50 @@
+phase: 10
+version: phase10.2-vieneu-local-voice-v1
+# Only confirmed Phase09 tokens enter the sentence builder.
+# Classes outside the current TCN labels are kept in vocabulary_pending until retrained.
+phrases:
+  xin_chao: "xin chào"
+  cam_on: "cảm ơn"
+  xin_loi: "xin lỗi"
+vocabulary_pending:
+  toi: "tôi"
+  ban: "bạn"
+  chung_ta: "chúng ta"
+  muon: "muốn"
+  can: "cần"
+  khong: "không"
+  co: "có"
+  di: "đi"
+  ve: "về"
+  hoc: "học"
+  giup_do: "giúp đỡ"
+  uong_nuoc: "uống nước"
+  an: "ăn"
+  o_dau: "ở đâu"
+  hom_nay: "hôm nay"
+  ngay_mai: "ngày mai"
+  tam_biet: "tạm biệt"
+  khoe_khong: "khỏe không"
+# These control labels are optional; no model is claimed to recognize them.
+punctuation_labels:
+  dau_phay: ","
+  dau_cham: "."
+  dau_hoi: "?"
+  dau_cam: "!"
+sentence:
+  max_tokens: 40
+  auto_finalize_on_rest: false
+  auto_speak_on_finalize: false
+tts:
+  backend: vieneu           # Local VieNeu TTS; do not silently fall back to Piper/eSpeak
+  rate: 145                  # for Windows/eSpeak fallback
+  model_path: "voices/piper/vi_VN-vais1000-medium.onnx"  # optional legacy Piper only
+  vieneu_endpoint: "http://127.0.0.1:8770/synthesize"
+  vieneu_voice: "Minh Đức"
+  wav_output_dir: "logs/phase10_audio"
+  play_audio: true           # false = just create WAV files for diagnostics
+  # Requires: pip install piper-tts; one-time voice download script below.
+logging:
+  root: logs/phase10_sessions
+ui:
+  show_banner: true

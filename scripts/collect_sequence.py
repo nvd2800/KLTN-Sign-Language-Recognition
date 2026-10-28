@@ -70,6 +70,24 @@ def parse_args() -> argparse.Namespace:
     )
 
     parser.add_argument(
+        "--category",
+        type=str,
+        default=None,
+        choices=[
+            "scratching_head",
+            "holding_phone",
+            "touching_face",
+            "random_hand",
+            "waving",
+            "pointing",
+            "transition",
+            "no_hand",
+            "other_gesture",
+        ],
+        help="UNKNOWN gesture category",
+    )
+    
+    parser.add_argument(
         "--subject",
         required=True,
         help="Anonymous subject id, e.g. S01",
@@ -1098,20 +1116,35 @@ def main() -> None:
     # DATASET PATH
     # ========================================================
 
-    raw_root = (
-        resolve_project_path(
-            cfg["dataset"][
-                "raw_root"
-            ]
-        )
+    raw_root = resolve_project_path(
+        cfg["dataset"]["raw_root"]
     )
 
-    session_dir = (
-        raw_root
-        / identity.sign
-        / identity.subject_id
-        / identity.session_id
-    )
+    if args.sign.upper() == "UNKNOWN":
+        if not args.category:
+            raise SystemExit(
+                "--category is required when --sign UNKNOWN"
+            )
+
+        session_dir = (
+            raw_root
+            / "UNKNOWN"
+            / args.category
+            / identity.subject_id
+            / identity.session_id
+        )
+    else:
+        if args.category:
+            raise SystemExit(
+                "--category is only supported for UNKNOWN"
+            )
+
+        session_dir = (
+            raw_root
+            / identity.sign
+            / identity.subject_id
+            / identity.session_id
+        )
 
     session_dir.mkdir(
         parents=True,
@@ -1320,13 +1353,13 @@ def main() -> None:
                     + offset
                 )
 
-                sample_dir = (
-                    make_sample_dir(
-                        raw_root,
-                        identity,
-                        sample_index,
-                    )
-                )
+                sample_name = make_sample_dir(
+                    raw_root,
+                    identity,
+                    sample_index,
+                ).name
+
+                sample_dir = session_dir / sample_name
 
                 sample_id = (
                     sample_dir.name
@@ -1522,6 +1555,11 @@ def main() -> None:
                     actual_fps=actual_fps,
                 )
 
+                extra_metadata = (
+                    {"category": args.category, "unknown_category": args.category}
+                    if args.sign.upper() == "UNKNOWN"
+                    else None
+                )
                 # ==============================================
                 # ATOMIC SAVE
                 # ==============================================
@@ -1536,6 +1574,7 @@ def main() -> None:
                         frames=frames,
 
                         metadata=metadata,
+                        extra_metadata=extra_metadata,
 
                         video_temp_path=(
                             video_temp_path

@@ -1,0 +1,15 @@
+{
+  "mode": "signer_independent_val_test",
+  "val_samples": 3,
+  "test_samples": 3,
+  "categories": [
+    "holding_phone",
+    "scratching_head",
+    "touching_face"
+  ],
+  "subjects": [
+    "S01",
+    "S02"
+  ],
+  "warning": ""
+}
